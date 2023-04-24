@@ -1,0 +1,7 @@
+-- require('neosolarized').setup({
+--     comment_italics = true,
+--     background_set = true,
+-- })
+-- vim.cmd.colorscheme("kanagawa")
+-- vim.cmd.colorscheme("dracula")
+-- vim.cmd.colorscheme "catppuccin-mocha"
