@@ -47,4 +47,4 @@ autocmd({"BufWritePre"}, {
     command = "%s/\\s\\+$//e",
 })
 
-vim.cmd.colorscheme "gruvbox"
+vim.cmd.colorscheme "nightfly"

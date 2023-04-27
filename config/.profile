@@ -33,3 +33,8 @@ fi
 
 export PATH="$PATH:/usr/local/go/bin"
 . "$HOME/.cargo/env"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "/usr/bin/zig" ] ; then
+    PATH="/usr/bin/zig:$PATH"
+fi
