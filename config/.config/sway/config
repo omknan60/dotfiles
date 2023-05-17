@@ -2,3 +2,5 @@ include ~/.config/sway/config.d/settings.conf
 include ~/.config/sway/config.d/remaps.conf
 include ~/.config/sway/config.d/input.conf
 include ~/.config/sway/config.d/bar.conf
+
+exec ~/.config/sway/scripts/battery-pop.sh
