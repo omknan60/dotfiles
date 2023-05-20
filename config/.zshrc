@@ -16,6 +16,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/.config/emacs/bin" ] ; then
+    PATH="$HOME/.config/emacs/bin:$PATH"
+fi
+
 export PATH="$PATH:/usr/local/go/bin:/usr/local/zig"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/config/p10k-robbyrussell.zsh
