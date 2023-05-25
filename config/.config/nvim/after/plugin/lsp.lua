@@ -13,6 +13,7 @@ lsp.ensure_installed({
     'html',
     'pyright',
     'gopls',
+    'zls',
 })
 
 local cmp = require('cmp')

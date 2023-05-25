@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Created by newuser for 5.8
 . "$HOME/.cargo/env"
 
@@ -20,7 +27,6 @@ if [ -d "$HOME/.config/emacs/bin" ] ; then
     PATH="$HOME/.config/emacs/bin:$PATH"
 fi
 
-export PATH="$PATH:/usr/local/go/bin:/usr/local/zig"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/config/p10k-robbyrussell.zsh
 
@@ -32,8 +38,6 @@ export NVM_DIR="$HOME/.nvm"
 if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
   source /usr/share/zsh/manjaro-zsh-config
 fi
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
