@@ -1,2 +1,2 @@
-image=~/Pictures/wallpapers/trimming_the_moon.jpg
-daemonize
+image=/home/omkar/Pictures/wallpapers/trimming_the_moon.jpg
+ignore-empty-password

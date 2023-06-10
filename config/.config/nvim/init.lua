@@ -45,7 +45,5 @@ autocmd({"BufWritePre"}, {
     command = "%s/\\s\\+$//e",
 })
 
-vim.o.background = "dark"
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.cmd("colorscheme kanagawa")

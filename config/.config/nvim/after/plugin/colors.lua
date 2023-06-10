@@ -1,7 +1,8 @@
--- require('neosolarized').setup({
---     comment_italics = true,
---     background_set = true,
--- })
--- vim.cmd.colorscheme("kanagawa")
--- vim.cmd.colorscheme("dracula")
--- vim.cmd.colorscheme "catppuccin-mocha"
+function ColorMyPencils(color)
+    color  = color or "catppuccin"
+    vim.cmd.colorscheme(color)
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none"})
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none"})
+end
+
+ColorMyPencils()

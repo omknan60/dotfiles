@@ -1,11 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>t", "<cmd>FloatermNew fff<CR>")
 vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>")
-
-vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
-vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
-vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")
-vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
 
 vim.keymap.set("n", "<c-s>", ":w<CR>")
 vim.keymap.set("i", "<c-s>", "<Esc>:w<CR>")
