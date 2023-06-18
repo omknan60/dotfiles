@@ -47,7 +47,7 @@ floating_modifier Mod1
 default_border none
 
 # start a terminal
-bindsym $Mod+Return exec alacritty
+bindsym $Mod+Return exec st /usr/bin/tmux new-session -A -D -s main
 
 bindsym $Mod+Shift+Home exec i3lock
 

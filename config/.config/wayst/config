@@ -4,20 +4,9 @@
 # Set a list of primary fonts (All available styles will be loaded)
 # You need to list EVERY font you want to use. for example:
 # "IBM Plex Sans Thai" for thai script, "Noto Sans Math" for math symbols.
-font = [
-    # You can set codepoint ranges to which a given font should be applied.
-    # Here we define <min>..u+24ff and u+2580..<max> to exclude the unicode
-    # box drawing block. Those characters will be loaded (if present) from
-    # the following fonts in this list.
-    "NotoSansMono Nerd Font Mono",
-    "sauce code pro nerd font",
-    # Mixing ttf/otf with bitmap fonts is ok
-    # You can set an offset to keep fonts smaller/larger than the global size.
-    "Terminus:-3"
-]
 
 # Or just use a single font
-# font = "Hack NFM"
+font = "Fira Mono"
 
 # Set a list of 'symbol' fonts (Only the 'Regular' style will be loaded)
 font-symbol = [
@@ -30,7 +19,7 @@ font-color = "Noto Color Emoji"
 
 # use Semibold as the Bold style
 style-bold = "Regular"
-font-size = 13
+font-size = 17
 dpi = 96
 
 # Load one of the default colorschemes
