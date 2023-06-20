@@ -9,10 +9,10 @@ st.termname:     st-256color
 st.borderless:        0
 
 ! --- The following options options can be reloaded via USR1 signal. ---
-st.font:              Fira Mono:size=16:antialias=true:autohint=true;
+st.font:              Fira Mono:pixelsize=23:antialias=true:autohint=true;
 
 ! window padding
-st.borderpx:          3
+st.borderpx:          0
 
 ! Kerning / character bounding-box height multiplier
 st.chscale:           1.0
@@ -20,29 +20,31 @@ st.chscale:           1.0
 ! Kerning / character bounding-box width multiplier
 st.cwscale:           1.0
 
-! colors -- this is the base16-twilight colorscheme.
-st.foreground:   #a7a7a7
-st.background:   #1e1e1e
-st.color0:       #1e1e1e
-st.color1:       #cf6a4c
-st.color2:       #8f9d6a
-st.color3:       #f9ee98
-st.color4:       #7587a6
-st.color5:       #9b859d
-st.color6:       #afc4db
-st.color7:       #a7a7a7
-st.color8:       #5f5a60
-st.color9:       #cf6a4c
-st.color10:      #8f9d6a
-st.color11:      #f9ee98
-st.color12:      #7587a6
-st.color13:      #9b859d
-st.color14:      #afc4db
-st.color15:      #ffffff
-st.color16:      #cda869
-st.color17:      #9b703f
-st.color18:      #323537
-st.color19:      #464b50
-st.color20:      #838184
-st.color21:      #c3c3c3
+st.foreground:   #ababab
+st.background:   #000000
+st.cursorColor:  #ababab
+
+st.color0:       #000000
+st.color8:       #343434
+
+st.color1:       #e92f2f
+st.color9:       #e92f2f
+
+st.color2:       #0ed839
+st.color10:      #0ed839
+
+st.color3:       #dddd13
+st.color11:      #dddd13
+
+st.color4:       #3b48e3
+st.color12:      #3b48e3
+
+st.color5:       #f996e2
+st.color13:      #f996e2
+
+st.color6:       #23edda
+st.color14:      #23edda
+
+st.color7:       #ababab
+st.color15:      #f9f9f9
 
