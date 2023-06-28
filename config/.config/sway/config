@@ -1,6 +1,6 @@
 # exec systemctl --user import-environment
 # exec mako
-# xwayland enable
+xwayland enable
 
 include /etc/sway/config.d/*
 
@@ -24,12 +24,9 @@ set $up k
 set $right l
 set $term foot
 set $browser MOZ_ENABLE_WAYLAND=1 firefox
-set $menu fuzzel
-#set $menu killall rofi || rofi -theme solarized -font "Fira Code 14" -show drun
-#set $menu dmenu-wl_run | xargs swaymsg exec --
-#set $menu bemenu-run -i --fn "UbuntuMono Nerd Font Mono 16" --hp 10 -W 0.5 --center --list 10 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"| xargs swaymsg exec --
-
-output * bg ~/Pictures/wallpapers/goku-on-shen-long.jpg fill
+set $menu bemenu-run -i --fn "UbuntuMono Nerd Font Mono 16" --hp 10 -W 0.5 --center --list 10 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"| xargs swaymsg exec --
+set $menu2 rofi -show drun | xargs swaymsg exec --
+#output * bg ~/Pictures/wallpapers/goku-on-shen-long.jpg fill
 
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 
@@ -58,6 +55,7 @@ input "type:touchpad" {
 
 # Start your launcher
     bindsym $mod+d exec $menu
+    bindsym $mod+Shift+d exec $menu2
 
 bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl s +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl s 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
@@ -191,22 +189,9 @@ bindsym Escape mode "default"
 bindsym $mod+r mode "resize"
 
 bar {
-    position bottom
-
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while echo "$(/home/omkar/.local/scripts/battery_indicator.sh)  $(date +'%Y-%m-%d  %H:%M:%S %p')"; do sleep 1; done
-    font "Fira Mono 14"
-    #modifier Mod4
-    #mode hide
-    #font "Terminus (TTF)"
-
-
-    colors {
-        statusline #ebdbb2
-        background #1d2021
-        inactive_workspace #1d2021 #1d2021 #ebdbb2
-        focused_workspace  #282828 #83c07c #282828
-        active_workspace   #282828 #83c07c #282828
-    }
+    #status_command while echo "$(/home/omkar/.local/scripts/battery_indicator.sh) 󰸗 $(date +'%Y-%m-%d  %H:%M:%S %p')"; do sleep 1; done
+    status_command SCRIPT_DIR=~/.config/i3blocks/scripts i3blocks
+    font pango: JetBrainsMono Nerd Font Mono 13
 }

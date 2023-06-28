@@ -9,7 +9,7 @@ st.termname:     st-256color
 st.borderless:        0
 
 ! --- The following options options can be reloaded via USR1 signal. ---
-st.font:              Fira Mono:pixelsize=23:antialias=true:autohint=true;
+st.font:              JetBrainsMono Nerd Font Mono:pixelsize=23:antialias=true:autohint=true;
 
 ! window padding
 st.borderpx:          0

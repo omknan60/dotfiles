@@ -19,4 +19,4 @@ else
     symbol=""
 fi
 
-echo " ${percentage}% ${symbol} "
+echo " ${symbol} ${percentage}% "
