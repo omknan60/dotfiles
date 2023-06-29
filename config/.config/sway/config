@@ -1,6 +1,6 @@
 # exec systemctl --user import-environment
 # exec mako
-xwayland enable
+#xwayland enable
 
 include /etc/sway/config.d/*
 

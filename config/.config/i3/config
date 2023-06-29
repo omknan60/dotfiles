@@ -22,6 +22,8 @@ exec --no-startup-id nm-applet
 exec xrandr --output VGA-1 --mode "1366x768"
 exec feh --bg-scale ~/Pictures/wallpapers/d3h7ofnt73621.png
 
+exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 
@@ -204,6 +206,7 @@ bindsym $Mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3blocks
+        #tray_output primary
         #modifier Mod1
 }
 
