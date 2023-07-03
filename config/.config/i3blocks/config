@@ -27,14 +27,14 @@ command=echo $(cat /sys/class/power_supply/BAT0/capacity)
 interval=2
 color=#ff5555
 border=#ff5555
-label=<span color="#ff79c6"> </span>
+label=<span color="#ff79c6">  </span>
 border_top=1
 border_right=0
 border_bottom=0
 border_left=0
 
 [wifi]
-command=nmcli c | awk '/wifi/ {printf("%s", $1)}'
+command=nmcli -t -f TYPE,NAME c show --active | awk -F: '/802-11-wireless:.*/ {print $2}'
 interval=5
 label=<span color="#ff79c6"> </span>
 border=#ff79c6
@@ -94,7 +94,7 @@ border_bottom=0
 border_left=0
 
 [volume]
-command=pactl get-sink-volume @DEFAULT_SINK@ | awk '{ printf "%i<span color=\"#bd93f9\">%</span>\n", $5 }'
+command=wpctl get-volume @DEFAULT_SINK@ | awk '{ printf "%s<span color=\"#bd93f9\">%</span>\n", $2*100 }'
 interval=1
 label=<span color="#bd93f9"> </span>
 border=#bd93f9
@@ -114,7 +114,7 @@ border_bottom=0
 border_left=0
 
 [date]
-command=LC_ALL="en_IN.UTF-8" date '+%Y %B %d %A' | awk '{ printf "%s <span color=\"#ff5555\">%s %s </span>%s<span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3, $4, $5, $6 }'
+command=date '+%Y %B %d %A' | awk '{ printf "%s <span color=\"#ff5555\">%s %s </span>%s<span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3, $4, $5, $6 }'
 interval=60
 label=<span color="#ff5555"> </span>
 border=#ff5555

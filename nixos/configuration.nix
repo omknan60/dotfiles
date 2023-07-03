@@ -107,21 +107,24 @@
 # List packages installed in system profile. To search, run:
 # $ nix search wget
     environment.systemPackages = with pkgs; [
-        clang
         acpi
-        gcc
-        xclip
-        git
         ansible
-        stow
-        tmux
         brightnessctl
+        firefox
+        gcc
+        glibc
+        glibc.static
+        git
+        htop
+        neovim
         nodejs
         ntfs3g
-        neovim
+        stdenv
+        stow
+        tmux
+        xclip
         xfce.thunar
         xfce.thunar-volman
-        firefox
         (st.overrideAttrs (oldAttrs: rec {
                            patches = [
                            ( fetchpatch {
