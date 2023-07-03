@@ -23,7 +23,7 @@ border_bottom=0
 border_left=0
 
 [battery]
-command=echo $(cat /sys/class/power_supply/BAT1/capacity)
+command=echo $(cat /sys/class/power_supply/BAT0/capacity)
 interval=2
 color=#ff5555
 border=#ff5555
