@@ -164,7 +164,7 @@ assign [class="Chromium"] $ws2
 assign [class="Brave-browser"] $ws2
 assign [class="Org.gnome.Nautilus"] $ws3
 assign [class="Thunar"] $ws3
-assign [class="Evince"] $ws4
+assign [class="Zathura"] $ws4
 assign [class="Atril"] $ws4
 assign [class="vlc"] $ws5
 

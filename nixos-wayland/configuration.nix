@@ -4,6 +4,45 @@
 
 { config, pkgs, overlays, ... }:
 
+let
+# bash script to let dbus know about important env variables and
+# propagate them to relevent services run at the end of sway config
+# see
+# https://github.com/emersion/xdg-desktop-portal-wlr/wiki/"It-doesn't-work"-Troubleshooting-Checklist
+# note: this is pretty much the same as  /etc/sway/config.d/nixos.conf but also restarts
+# some user services to make sure they have the correct environment variables
+dbus-sway-environment = pkgs.writeTextFile {
+    name = "dbus-sway-environment";
+    destination = "/bin/dbus-sway-environment";
+    executable = true;
+
+    text = ''
+        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+        systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+        systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+        '';
+};
+
+# currently, there is some friction between sway and gtk:
+# https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+# the suggested way to set gtk settings is with gsettings
+# for gsettings to work, we need to tell it where the schemas are
+# using the XDG_DATA_DIR environment variable
+# run at the end of sway config
+configure-gtk = pkgs.writeTextFile {
+    name = "configure-gtk";
+    destination = "/bin/configure-gtk";
+    executable = true;
+    text = let
+        schema = pkgs.gsettings-desktop-schemas;
+    datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+    in ''
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        gnome_schema=org.gnome.desktop.interface
+        gsettings set $gnome_schema gtk-theme 'Dracula'
+        '';
+};
+in
 {
 #  nixpkgs.overlays = [
 #    (import ./st-overlay.nix)
@@ -17,12 +56,6 @@
 # Bootloader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-
-    fileSystems."/media/NewVolume" = {
-        device = "/dev/nvme0n1p1";
-        fsType = "ntfs";
-        options = [ "defaults" ];
-        };
 
     networking.hostName = "nixos"; # Define your hostname.
 # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -51,32 +84,6 @@
         LC_TELEPHONE = "en_IN";
         LC_TIME = "en_IN";
     };
-
-# Configure keymap in X11
-    services.xserver = {
-        enable = true;
-        layout = "us";
-        xkbVariant = "";
-
-        desktopManager = {
-            xterm.enable = false;
-        };
-
-        displayManager = {
-            defaultSession = "none+i3";
-        };
-
-        windowManager.i3 = {
-            enable = true;
-            extraPackages = with pkgs; [
-                dmenu
-                    i3status
-                    i3lock
-                    i3blocks
-            ];
-        };
-    };
-
 # rtkit is optional but recommended
     security.rtkit.enable = true;
     services.pipewire = {
@@ -114,47 +121,47 @@
 # $ nix search wget
     environment.systemPackages = with pkgs; [
         acpi
-        ansible
-        brightnessctl
-        firefox
-        gcc
-        git
-        glibc
-        glibc.static
-        htop
-        cmake
-        neovim
-        nodejs
-        ntfs3g
-        stdenv
-        stow
-        tmux
-        unzip
-        xclip
-        xfce.thunar
-        xfce.thunar-volman
-        zathura
-        (st.overrideAttrs (oldAttrs: rec {
-                           patches = [
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/xresources/st-xresources-20200604-9ba7ecf.diff";
-                             sha256 = "0nsda5q8mkigc647p1m8f5jwqn3qi8194gjhys2icxji5c6v9sav";
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff" ;
-                             sha256 = "1cpap2jz80n90izhq5fdv2cvg29hj6bhhvjxk40zkskwmjn6k49j" ;
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/clipboard/st-clipboard-0.8.3.diff" ;
-                             sha256 = "1h1nwilwws02h2lnxzmrzr69lyh6pwsym21hvalp9kmbacwy6p0g" ;
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/anysize/st-anysize-20220718-baa9357.diff" ;
-                             sha256 = "1ym5d2f85l3avgwf9q93aymdg23aidprqwyh9s1fdpjvyh80rvvq" ;
-                             })
-                           ];
-                           }))
-    ];
+            ansible
+            brightnessctl
+            firefox
+            foot
+            gcc
+            glibc
+            glibc.static
+            git
+            htop
+            neovim
+            nodejs
+            ntfs3g
+            stdenv
+            stow
+            tmux
+            xclip
+            xfce.thunar
+            xfce.thunar-volman
+            dbus-sway-environment
+            configure-gtk
+            wayland
+            xdgutils
+            swaylock
+            swayidle
+            wl-clipboard
+            bemenu
+            ];
+    services.dbus.enable = true;
+    xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+# gtk portal needed to make gtk apps happy
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+
+# enable sway window manager
+    programs.sway = {
+        enable = true;
+        wrapperFeatures.gtk = true;
+    };
+
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.
 # programs.mtr.enable = true;
