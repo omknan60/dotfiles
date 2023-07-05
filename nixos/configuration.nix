@@ -121,6 +121,7 @@
         git
         glibc
         glibc.static
+        gnumake
         htop
         cmake
         neovim
