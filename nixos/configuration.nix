@@ -12,17 +12,20 @@
     imports =
         [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
+            <home-manager/nixos>
         ];
 
 # Bootloader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
+    boot.supportedFilesystems = [ "ntfs" ];
+    time.hardwareClockInLocalTime = true;
 
     fileSystems."/media/NewVolume" = {
         device = "/dev/nvme0n1p1";
-        fsType = "ntfs";
-        options = [ "defaults" ];
-        };
+        fsType = "ntfs-3g";
+        options = [ "defaults" "nofail" "rw" "uid=1000" ];
+    };
 
     networking.hostName = "nixos"; # Define your hostname.
 # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -33,7 +36,7 @@
 
 # Enable networking
         networking.networkmanager.enable = true;
-
+    nix.settings.experimental-features = "nix-command flakes";
 # Set your time zone.
     time.timeZone = "Asia/Kolkata";
 
@@ -89,10 +92,38 @@
     };
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
+
+    home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+    };
+
+    programs.zsh.enable = true;
+    users.defaultUserShell = pkgs.zsh;
+    environment.shells = with pkgs; [ zsh ];
+
+    home-manager.users.omkar = { pkgs, osConfig, ... }: {
+        home.packages = [ ];
+        home.stateVersion = "23.05";
+        programs.zsh = {
+            enable = true;
+            shellAliases = {
+                ll = "ls -l";
+                update = "sudo nixos-rebuild switch";
+            };
+# Your zsh config
+            oh-my-zsh = {
+                enable = true;
+                plugins = [ "git" ];
+                theme = "robbyrussell";
+            };
+        };
+    };
+
     users.users.omkar = {
         isNormalUser = true;
         description = "Omkar Nandan";
-        extraGroups = [ "networkmanager" "wheel" "video" ];
+        extraGroups = [ "networkmanager" "wheel" "video" "root" ];
         packages = with pkgs; [];
     };
 
@@ -100,7 +131,6 @@
     nixpkgs.config.allowUnfree = true;
     fonts.fonts = with pkgs; [
         noto-fonts
-            noto-fonts-cjk
             noto-fonts-emoji
             liberation_ttf
             fira-code
@@ -108,53 +138,51 @@
             mplus-outline-fonts.githubRelease
             dina-font
             proggyfonts
-            (nerdfonts.override { fonts = [ "JetBrainsMono" "DroidSansMono" ]; })
+            (nerdfonts.override { fonts = [ "Hack" "UbuntuMono" ]; })
     ];
 # List packages installed in system profile. To search, run:
 # $ nix search wget
     environment.systemPackages = with pkgs; [
         acpi
-        ansible
-        brightnessctl
-        firefox
-        gcc
-        git
-        glibc
-        glibc.static
-        gnumake
-        htop
-        cmake
-        neovim
-        nodejs
-        ntfs3g
-        stdenv
-        stow
-        tmux
-        unzip
-        xclip
-        xfce.thunar
-        xfce.thunar-volman
-        zathura
-        (st.overrideAttrs (oldAttrs: rec {
-                           patches = [
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/xresources/st-xresources-20200604-9ba7ecf.diff";
-                             sha256 = "0nsda5q8mkigc647p1m8f5jwqn3qi8194gjhys2icxji5c6v9sav";
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff" ;
-                             sha256 = "1cpap2jz80n90izhq5fdv2cvg29hj6bhhvjxk40zkskwmjn6k49j" ;
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/clipboard/st-clipboard-0.8.3.diff" ;
-                             sha256 = "1h1nwilwws02h2lnxzmrzr69lyh6pwsym21hvalp9kmbacwy6p0g" ;
-                             })
-                           ( fetchpatch {
-                             url = "http://st.suckless.org/patches/anysize/st-anysize-20220718-baa9357.diff" ;
-                             sha256 = "1ym5d2f85l3avgwf9q93aymdg23aidprqwyh9s1fdpjvyh80rvvq" ;
-                             })
-                           ];
-                           }))
+            ansible
+            brightnessctl
+            cmake
+            evince
+            firefox
+            gcc
+            git
+            glibc
+            glibc.static
+            gnome.nautilus
+            gnome.nixos-gsettings-overrides
+            gnumake
+            htop
+            libreoffice-fresh
+            neovim
+            nodejs
+            ntfs3g
+            obsidian
+            playerctl
+            stdenv
+            stow
+            tmux
+            ubuntu-themes
+            unzip
+            xclip
+            (st.overrideAttrs (oldAttrs: rec {
+                               src = fetchFromGitHub {
+                               owner = "LukeSmithxyz";
+                               repo = "st";
+                               rev = "8ab3d03681479263a11b05f7f1b53157f61e8c3b";
+                               sha256 = "1brwnyi1hr56840cdx0qw2y19hpr0haw4la9n0rqdn0r2chl8vag";
+                               };
+# Make sure you include whatever dependencies the fork needs to build properly!
+                               buildInputs = oldAttrs.buildInputs ++ [ harfbuzz ];
+# If you want it to be always up to date use fetchTarball instead of fetchFromGitHub
+# src = builtins.fetchTarball {
+#   url = "https://github.com/lukesmithxyz/st/archive/master.tar.gz";
+# };
+                               }))
     ];
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.

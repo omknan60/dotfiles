@@ -15,7 +15,7 @@ markup=pango
 [mediaplayer]
 command=playerctl metadata --format "{{ artist }} <span color=\"#bd93f9\">-</span> {{ title }}"
 interval=2
-label=<span color="#bd93f9"> </span>
+label=<span color="#bd93f9">󰎈 </span>
 border=#bd93f9
 border_top=1
 border_right=0
