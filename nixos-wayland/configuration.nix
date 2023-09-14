@@ -147,6 +147,7 @@ in
             swayidle
             wl-clipboard
             bemenu
+            udisk
             ];
     services.dbus.enable = true;
     xdg.portal = {

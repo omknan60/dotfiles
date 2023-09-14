@@ -27,6 +27,13 @@
         options = [ "defaults" "nofail" "rw" "uid=1000" ];
     };
 
+    # Make sure opengl is enabled
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
     networking.hostName = "nixos"; # Define your hostname.
 # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -76,6 +83,7 @@
                     i3status
                     i3lock
                     i3blocks
+                    networkmanagerapplet
             ];
         };
     };
@@ -110,6 +118,7 @@
             shellAliases = {
                 ll = "ls -l";
                 update = "sudo nixos-rebuild switch";
+                ftp = "sudo curlftpfs -o allow_other";
             };
 # Your zsh config
             oh-my-zsh = {
@@ -123,7 +132,7 @@
     users.users.omkar = {
         isNormalUser = true;
         description = "Omkar Nandan";
-        extraGroups = [ "networkmanager" "wheel" "video" "root" ];
+        extraGroups = [ "networkmanager" "wheel" "video" "root" "fuse" ];
         packages = with pkgs; [];
     };
 
@@ -133,12 +142,10 @@
         noto-fonts
             noto-fonts-emoji
             liberation_ttf
-            fira-code
-            fira-code-symbols
             mplus-outline-fonts.githubRelease
             dina-font
             proggyfonts
-            (nerdfonts.override { fonts = [ "Hack" "UbuntuMono" ]; })
+            (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ];
 # List packages installed in system profile. To search, run:
 # $ nix search wget
@@ -147,6 +154,9 @@
             ansible
             brightnessctl
             cmake
+            cmus
+            curlftpfs
+            dbus
             evince
             firefox
             gcc
@@ -154,21 +164,34 @@
             glibc
             glibc.static
             gnome.nautilus
-            gnome.nixos-gsettings-overrides
             gnumake
             htop
+            jupyter
             libreoffice-fresh
+            lxappearance
+            moc
+            mpv
             neovim
             nodejs
             ntfs3g
             obsidian
             playerctl
+            python3Full
+            python310Packages.pip
+            R
+            rstudioWrapper
             stdenv
             stow
             tmux
             ubuntu-themes
             unzip
+            vlc
             xclip
+            xfce.ristretto
+            xfce.thunar
+            xfce.tumbler
+            xfce.thunar-archive-plugin
+            xfce.thunar-volman
             (st.overrideAttrs (oldAttrs: rec {
                                src = fetchFromGitHub {
                                owner = "LukeSmithxyz";
